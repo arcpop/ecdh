@@ -1,9 +1,9 @@
-package echd
+package ecdh
 
 import (
 	"crypto/elliptic"
-	"crypto/rand"
 	"errors"
+	"io"
 )
 
 
@@ -15,9 +15,9 @@ type ECDH struct {
     PrivateKey []byte
 }
 
-func GenerateNew(curve elliptic.Curve) (*ECDH, error)  {
+func GenerateNew(curve elliptic.Curve, randomData io.Reader) (*ECDH, error)  {
     ecdh := &ECDH{ Curve: curve }
-    priv, x, y, err := elliptic.GenerateKey(curve, rand.Reader)
+    priv, x, y, err := elliptic.GenerateKey(curve, randomData)
     if err != nil {
         return nil, err
     }
